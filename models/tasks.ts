@@ -1,7 +1,7 @@
 import { Schema, model, models } from "mongoose";
-import { Itask } from "@types";
+import { ITask } from "@types";
 
-const taskSchema = new Schema<Itask>({
+const taskSchema = new Schema<ITask>({
   task: {
     type: String,
     require: [true, "  Task is required."],
@@ -12,5 +12,5 @@ const taskSchema = new Schema<Itask>({
   },
 });
 
-const Task = models.task || model<Itask>("Task", taskSchema);
+const Task = models.Task || model<ITask>("Task", taskSchema);
 export default Task;

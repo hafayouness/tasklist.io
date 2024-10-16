@@ -4,8 +4,14 @@ export interface AddTaskProps {
   handleCreateTask: () => void;
 }
 
-export interface Itask {
+export interface ITask {
   _id: string;
   task: string;
   completed: boolean;
+}
+
+export interface TaskProps {
+  individualTask: ITask;
+  handleCompleteTask: (id: string) => void;
+  handleDeleteTask: (id: string) => void;
 }
