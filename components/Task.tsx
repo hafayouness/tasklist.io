@@ -1,16 +1,29 @@
-import { Card, Flex, Text, Button } from "@chakra-ui/react";
-import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
+import { Card, Flex, Text, Button, Input } from "@chakra-ui/react";
+import { CheckIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 import { TaskProps } from "@types";
+import { useState } from "react";
+
 const Task = ({
   individualTask,
-  handleCompleteTask,
   handleDeleteTask,
+  handleEditTask,
 }: TaskProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTaskContent, setNewTaskContent] = useState(individualTask.task);
+  const handleSaveEdit = () => {
+    handleEditTask(individualTask._id, newTaskContent);
+    setIsEditing(false);
+  };
   return (
     <Card p="2rem" mb="0.5rem" variant="outline">
       <Flex alignItems="center">
-        {individualTask.completed ? (
+        {isEditing ? (
+          <Input
+            value={newTaskContent}
+            onChange={(e) => setNewTaskContent(e.target.value)}
+          />
+        ) : individualTask.completed ? (
           <Text flexGrow="1" as="del">
             {individualTask.task}
           </Text>
@@ -18,18 +31,16 @@ const Task = ({
           <Text flexGrow="1">{individualTask.task}</Text>
         )}
         <Flex>
-          {individualTask.completed ? (
-            <Button isDisabled ml="1rem" colorScheme="whatsapp">
-              <CheckIcon />
-            </Button>
-          ) : (
-            <Button
-              isDisabled
-              ml="1rem"
-              colorScheme="whatsapp"
-              onClick={() => handleCompleteTask(individualTask._id)}
-            >
-              <CheckIcon />
+          <Button
+            ml="1rem"
+            colorScheme="blue"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            {isEditing ? <EditIcon /> : "Edit"}
+          </Button>
+          {isEditing && (
+            <Button ml="1rem" colorScheme="green" onClick={handleSaveEdit}>
+              Save
             </Button>
           )}
           <Button

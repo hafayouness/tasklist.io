@@ -12,6 +12,12 @@ export interface ITask {
 
 export interface TaskProps {
   individualTask: ITask;
-  handleCompleteTask: (id: string) => void;
   handleDeleteTask: (id: string) => void;
+  handleEditTask: (id: string, updatedTask: string) => void;
+}
+
+export interface IDeleteTaskRequestParam {
+  params: {
+    id: string;
+  };
 }
